@@ -40,6 +40,7 @@ public class ErrorHandler {
 
     @ExceptionHandler
     public ResponseEntity<?> handleException(Exception exc){
+        simpleError.setStatus("Bad request");
         simpleError.setMessage("Client Error");
         simpleError.setStatusCode(HttpStatus.BAD_REQUEST.value());
 
