@@ -1,10 +1,7 @@
 package com.example.task3.controller;
 
 import com.example.task3.DAO.OrganisationDAO;
-import com.example.task3.dto.ErrorDetailDTO;
-import com.example.task3.dto.OrganisationDTO;
-import com.example.task3.dto.ResponseDTO;
-import com.example.task3.dto.SimpleResponseDTO;
+import com.example.task3.dto.*;
 import com.example.task3.entity.Organisations;
 import com.example.task3.entity.Users;
 import com.example.task3.exception.ValidationError;
@@ -63,7 +60,7 @@ public class OrganisationController {
     }
 
     @GetMapping("/organisations/{orgId}")
-    public ResponseEntity<?> getOrganisation(@PathVariable String orgId){
+    public ResponseEntity<?> getOrganisation(@PathVariable("orgId") String orgId){
         Organisations org = organisationService.getOrganisationRecord(orgId);
          ResponseDTO responseDTO = new ResponseDTO(); // Create a new instance locally
 
@@ -103,7 +100,7 @@ public class OrganisationController {
     }
 
     @PostMapping("/organisations/{orgId}/users")
-    public ResponseEntity<?> addOrg(@RequestBody Users user, @PathVariable String orgId){
+    public ResponseEntity<?> addOrg(@RequestBody UserDTO user, @PathVariable String orgId){
         Users users = userService.getUserbyId(user.getUserId());
         Organisations org = organisationService.getOrganisationRecord(orgId);
         org.addUser(users);
