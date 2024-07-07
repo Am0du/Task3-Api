@@ -4,6 +4,7 @@ import com.example.task3.DAO.OrganisationDAO;
 import com.example.task3.dto.*;
 import com.example.task3.entity.Organisations;
 import com.example.task3.entity.Users;
+import com.example.task3.exception.NoUserError;
 import com.example.task3.exception.ValidationError;
 import com.example.task3.security.JwtTokenProvider;
 import com.example.task3.service.OrganisationService;
@@ -60,17 +61,21 @@ public class OrganisationController {
     }
 
     @GetMapping("/organisations/{orgId}")
-    public ResponseEntity<?> getOrganisation(@PathVariable("orgId") String orgId){
-        Organisations org = organisationService.getOrganisationRecord(orgId);
-         ResponseDTO responseDTO = new ResponseDTO(); // Create a new instance locally
-
-            responseDTO.setStatus("success");
-            responseDTO.add("orgId", org.getOrgId());
-            responseDTO.add("name", org.getName());
-            responseDTO.add("description", org.getDescription());
-            responseDTO.setMessage("Organisation found");
-
-         return ResponseEntity.ok(responseDTO);
+    public ResponseEntity<?> getOrganisation(@PathVariable("orgId") String orgId, @RequestHeader String headerValue){
+        Users user = userService.getUser(jwtTokenProvider.getData(headerValue.substring(7)));
+        List<Organisations> orglist = user.getOrganisations();
+         ResponseDTO responseDTO = new ResponseDTO();
+         for(Organisations org: orglist){
+             if(org.getOrgId().equals(orgId)){
+                 responseDTO.setStatus("success");
+                 responseDTO.add("orgId", org.getOrgId());
+                 responseDTO.add("name", org.getName());
+                 responseDTO.add("description", org.getDescription());
+                 responseDTO.setMessage("Organisation found");
+                 return ResponseEntity.ok(responseDTO);
+             }
+         }
+         throw new NoUserError("Client is not in this org");
     }
 
     @PostMapping("/organisations")
