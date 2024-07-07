@@ -1,5 +1,6 @@
 package com.example.task3.controller;
 
+import com.example.task3.dto.LoginDTO;
 import com.example.task3.dto.ResponseDTO;
 import com.example.task3.dto.UserDTO;
 import com.example.task3.entity.Users;
@@ -36,16 +37,17 @@ public class AuthController {
     public ResponseEntity<?> register(@RequestBody Users user){
         String pass = user.getPassword();
         ResponseDTO data= userService.registerUser(user);
-        String token = authService.loginUser(user.getEmail(), pass);
+        LoginDTO login = new LoginDTO(user.getEmail(), user.getPassword());
+        String token = authService.loginUser(login);
         data.add("accessToken", token);
         return ResponseEntity.status(HttpStatus.CREATED).body(data);
 
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Users user){
-        String token = authService.loginUser(user.getEmail(), user.getPassword());
-        Users data = userService.getUser(user.getEmail());
+    public ResponseEntity<?> login(@RequestBody LoginDTO login){
+        String token = authService.loginUser(login);
+        Users data = userService.getUser(login.getEmail());
         responseDTO.setMessage("Login successful");
         responseDTO.setStatus("success");
         responseDTO.add("accessToken", token);

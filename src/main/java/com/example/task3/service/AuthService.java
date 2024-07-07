@@ -1,5 +1,7 @@
 package com.example.task3.service;
 
+import com.example.task3.dto.LoginDTO;
+
 public interface AuthService {
-    String loginUser(String email, String password);
+    String loginUser(LoginDTO login);
 }
