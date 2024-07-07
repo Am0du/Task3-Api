@@ -38,10 +38,30 @@ Task3 is a Spring Boot application designed to manage user authentication, user 
    cd task3
    ```
 
-2. **Set up Database**
+2. **Application Configuration**
 
-    - Create a PostgreSQL database (or your preferred database).
-    - Update `application.properties` with your database credentials and settings.
+   **Database Configuration**
+
+   Make sure to configure your database connection by setting the following properties in your `application.properties` or `application.yml` file:
+   
+   ```properties
+   spring.datasource.url = ${DATABASE_URL}
+   spring.datasource.username = ${DATABASE_USERNAME}
+   spring.datasource.password = ${DATABASE_PASSWORD}
+   ```
+
+   Replace `${DATABASE_URL}`, `${DATABASE_USERNAME}`, and `${DATABASE_PASSWORD}` with your actual database URL, username, and password.
+   
+   **JWT Configuration**
+   
+   For JWT (JSON Web Token) configuration, you'll need to set up the secret key and token expiration time:
+   
+   ```properties
+   app.jwt-secret = ${SECRET_KEY}
+   app.jwt-expiration = ${EXPIRATION_TIME} # in milliseconds
+   ```
+   
+   Replace `${SECRET_KEY}` with your secret key for signing JWT tokens and `${EXPIRATION_TIME}` with the expiration time of your JWT tokens in milliseconds (e.g., 60000 for 1 minute).
 
 3. **Build and Run**
 
@@ -54,8 +74,9 @@ Task3 is a Spring Boot application designed to manage user authentication, user 
     - Run the application:
 
       ```bash
-      you can run it directly from your IDE by running the `Task3Application` class.
+      mvn spring-boot:run
       ```
+      you can run it directly from your IDE by running the `Task3Application` class.
 
 4. **Accessing APIs**
 
@@ -131,53 +152,136 @@ Content-Type: application/json
   }
   ```
 
-### Create a New Organisation
+### Organisation
 
-**POST /api/organisations**
+This API provides endpoints to manage organisations and their associated users.
 
-- **Purpose:** Creates a new organization.
-- **Authorization:** Bearer \<JWT Token\>
-- **Content-Type:** application/json
-- **Request Body:**
+### Base URL
+```
+http://example.com/api/v1
+```
+
+### Authentication
+
+All endpoints require a valid JWT token passed in the `Authorization` header as `Bearer <token>`.
+
+### Endpoints
+
+#### Get All Organisations
+
+```http
+GET /organisations
+```
+
+- **Description**: Retrieves all organisations associated with the authenticated user.
+- **Request Header**: `Authorization` - JWT token for authentication.
+- **Response**:
   ```json
   {
-    "name": "Example Org",
-    "description": "An example organisation"
+    "status": "success",
+    "message": "User organisation found",
+    "organisations": [
+      {
+        "orgId": "unique_org_id",
+        "name": "Organisation Name",
+        "description": "Organisation Description"
+      },
+      ...
+    ]
   }
   ```
-- **Response (Success):** HTTP status 201 Created
+
+#### Get Organisation by ID
+
+```http
+GET /organisations/{orgId}
+```
+
+- **Description**: Retrieves details of a specific organisation by its `orgId`.
+- **Path Parameters**:
+  - `orgId` (string): Unique identifier of the organisation.
+- **Response**:
   ```json
   {
-    "orgId": "organization_id",
-    "name": "Example Org",
-    "description": "An example organisation",
+    "status": "success",
+    "message": "Organisation found",
+    "orgId": "unique_org_id",
+    "name": "Organisation Name",
+    "description": "Organisation Description"
+  }
+  ```
+
+#### Create Organisation
+
+```http
+POST /organisations
+```
+
+- **Description**: Creates a new organisation.
+- **Request Header**: `Authorization` - JWT token for authentication.
+- **Request Body**:
+  ```json
+  {
+    "name": "Organisation Name",
+    "description": "Organisation Description"
+  }
+  ```
+- **Response**:
+  ```json
+  {
+    "status": "success",
     "message": "Organisation created Successfully",
-    "status": "success"
+    "orgId": "unique_org_id",
+    "name": "Organisation Name",
+    "description": "Organisation Description"
   }
   ```
-- **Validation:** Throws `ValidationError` if `name` field is null.
 
-### Add User to Organisation
+#### Add User to Organisation
 
-**POST /api/organisations/{orgId}/users**
+```http
+POST /organisations/{orgId}/users
+```
 
-- **Purpose:** Adds a user to an organization.
-- **Path Variable:** `orgId` - ID of the organization to add the user to.
-- **Request Body:** JSON representation of the user (`UserDTO`).
-- **Response (Success):**
+- **Description**: Adds a user to an existing organisation.
+- **Path Parameters**:
+  - `orgId` (string): Unique identifier of the organisation.
+- **Request Body**:
   ```json
   {
-    "message": "User added to organisation successfully",
-    "status": "success"
+    "userId": "user_id"
   }
   ```
+- **Response**:
+  ```json
+  {
+    "status": "success",
+    "message": "User added to organisation successfully"
+  }
+  ```
+
+### Errors
+
+- **Validation Error**:
+  - Status Code: 400 Bad Request
+  - Response Body Example:
+    ```json
+    {
+      "errors": [
+        {
+          "field": "name",
+          "message": "This field cannot be null"
+        }
+      ]
+    }
+    ```
 
 ## Testing
 
 
-## Unit Testing
+### Unit Testing
 
-### Purpose
+#### Purpose
 
 Unit tests verify the functionality of individual components (classes and methods) in isolation to ensure they behave as expected.
 
