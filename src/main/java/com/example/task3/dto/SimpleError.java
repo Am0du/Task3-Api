@@ -5,14 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Component
-public class ErrorDTO {
-    private List<ErrorDetailDTO> error;
-
-//    public void add()
+public class SimpleError {
+    private String Status;
+    private String message;
+    private int statusCode;
 }
