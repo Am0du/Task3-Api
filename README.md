@@ -54,10 +54,8 @@ Task3 is a Spring Boot application designed to manage user authentication, user 
     - Run the application:
 
       ```bash
-      java -jar target/task3-0.0.1-SNAPSHOT.jar
+      you can run it directly from your IDE by running the `Task3Application` class.
       ```
-
-    - Alternatively, you can run it directly from your IDE by running the `Task3Application` class.
 
 4. **Accessing APIs**
 
