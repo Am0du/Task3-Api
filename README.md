@@ -50,18 +50,18 @@ Task3 is a Spring Boot application designed to manage user authentication, user 
    spring.datasource.password = ${DATABASE_PASSWORD}
    ```
 
-Replace `${DATABASE_URL}`, `${DATABASE_USERNAME}`, and `${DATABASE_PASSWORD}` with your actual database URL, username, and password.
-
-**JWT Configuration**
-
-For JWT (JSON Web Token) configuration, you'll need to set up the secret key and token expiration time:
-
-```properties
-app.jwt-secret = ${SECRET_KEY}
-app.jwt-expiration = ${EXPIRATION_TIME} # in milliseconds
-```
-
-Replace `${SECRET_KEY}` with your secret key for signing JWT tokens and `${EXPIRATION_TIME}` with the expiration time of your JWT tokens in milliseconds (e.g., 60000 for 1 minute).
+   Replace `${DATABASE_URL}`, `${DATABASE_USERNAME}`, and `${DATABASE_PASSWORD}` with your actual database URL, username, and password.
+   
+   **JWT Configuration**
+   
+   For JWT (JSON Web Token) configuration, you'll need to set up the secret key and token expiration time:
+   
+   ```properties
+   app.jwt-secret = ${SECRET_KEY}
+   app.jwt-expiration = ${EXPIRATION_TIME} # in milliseconds
+   ```
+   
+   Replace `${SECRET_KEY}` with your secret key for signing JWT tokens and `${EXPIRATION_TIME}` with the expiration time of your JWT tokens in milliseconds (e.g., 60000 for 1 minute).
 
 3. **Build and Run**
 
@@ -152,12 +152,11 @@ Content-Type: application/json
   }
   ```
 
-### Create a New Organisation
+### Organisation
 
 This API provides endpoints to manage organisations and their associated users.
 
 ### Base URL
-
 ```
 http://example.com/api/v1
 ```
@@ -280,9 +279,9 @@ POST /organisations/{orgId}/users
 ## Testing
 
 
-## Unit Testing
+### Unit Testing
 
-### Purpose
+#### Purpose
 
 Unit tests verify the functionality of individual components (classes and methods) in isolation to ensure they behave as expected.
 
