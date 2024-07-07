@@ -45,6 +45,7 @@ public class AuthController {
         String token = authService.loginUser(user.getEmail(), user.getPassword());
         Users data = userService.getUser(user.getEmail());
         responseDTO.setMessage("Login successful");
+        responseDTO.setStatus("success");
         responseDTO.add("accessToken", token);
         responseDTO.add("user", convertUserEntityToUserDto(data));
         return ResponseEntity.ok(responseDTO);
