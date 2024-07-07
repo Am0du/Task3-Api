@@ -18,7 +18,7 @@ public class spec {
     }
 
     @Test
-    public void testRegisterUserSuccessfullyWithNoDefaultOrganization() {
+    public void testRegisterUserSuccessfullyWithDefaultOrganization() {
         String firstName = "John";
         String lastName = "Doe";
         String email = "john.dik@example.com";
