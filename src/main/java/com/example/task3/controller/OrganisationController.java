@@ -61,7 +61,8 @@ public class OrganisationController {
     }
 
     @GetMapping("/organisations/{orgId}")
-    public ResponseEntity<?> getOrganisation(@PathVariable("orgId") String orgId, @RequestHeader String headerValue){
+    public ResponseEntity<?> getOrganisation(@PathVariable("orgId") String orgId,
+                                             @RequestHeader("Authorization") String headerValue){
         Users user = userService.getUser(jwtTokenProvider.getData(headerValue.substring(7)));
         List<Organisations> orglist = user.getOrganisations();
          ResponseDTO responseDTO = new ResponseDTO();
@@ -106,6 +107,13 @@ public class OrganisationController {
 
     @PostMapping("/organisations/{orgId}/users")
     public ResponseEntity<?> addOrg(@RequestBody UserDTO user, @PathVariable String orgId){
+
+        if(user.getUserId() == null){
+            List<ErrorDetailDTO> error = new ArrayList<>();
+            error.add(new ErrorDetailDTO("userId", "This field cannot be null"));
+            throw new ValidationError(error);
+        }
+
         Users users = userService.getUserbyId(user.getUserId());
         Organisations org = organisationService.getOrganisationRecord(orgId);
         org.addUser(users);
