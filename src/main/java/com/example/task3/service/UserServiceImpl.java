@@ -105,16 +105,19 @@ public class UserServiceImpl implements UserService{
     private List<ErrorDetailDTO> validateUser(Users user) {
         List<ErrorDetailDTO> errors = new ArrayList<>();
 
-        if (user.getFirstName() == null) {
+        if (user.getFirstName() == null || user.getFirstName().isEmpty()) {
             errors.add(new ErrorDetailDTO("firstName", user.getUserId()));
         }
-        if (user.getLastName() == null) {
+        if (user.getLastName() == null || user.getLastName().isEmpty()) {
             errors.add(new ErrorDetailDTO("lastName", "This field cannot be null"));
         }
-        if (user.getEmail() == null) {
+        if(!user.getEmail().contains("@") || !user.getEmail().contains(".") ){
+            errors.add(new ErrorDetailDTO("email", "Invalid email address"));
+        }
+        if (user.getEmail() == null || user.getEmail().isEmpty()) {
             errors.add(new ErrorDetailDTO("email", "This field cannot be null"));
         }
-        if (user.getPassword() == null) {
+        if (user.getPassword() == null || user.getPassword().isEmpty()) {
             errors.add(new ErrorDetailDTO("password", "This field cannot be null"));
         }
 
