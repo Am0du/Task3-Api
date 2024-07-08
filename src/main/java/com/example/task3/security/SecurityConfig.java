@@ -43,10 +43,10 @@ public class SecurityConfig{
         http.authorizeHttpRequests(configure ->
                         configure
                                 .requestMatchers(HttpMethod.OPTIONS, "/auth/**").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/auth/").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/organisations/{orgId}/users").permitAll()
-
                                 .anyRequest()
                                 .authenticated()
 
