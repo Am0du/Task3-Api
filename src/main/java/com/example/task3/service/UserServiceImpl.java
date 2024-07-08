@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService{
             try {
                 userDAO.save(user);
             }catch (Exception exc) {
-                throw new RegistrationFailedError("email already exist");
+                throw new RegistrationFailedError("Registration unsuccessful");
             }
         }else{
             throw new ValidationError(error);
