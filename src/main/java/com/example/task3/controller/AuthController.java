@@ -6,19 +6,23 @@ import com.example.task3.dto.UserDTO;
 import com.example.task3.entity.Users;
 import com.example.task3.service.AuthService;
 import com.example.task3.service.UserService;
+import com.example.task3.service.UserServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("api/auth")
 public class AuthController {
     private AuthService authService;
     private UserService userService;
     private ResponseDTO responseDTO;
 
     private UserDTO userDTO;
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
     public AuthController(AuthService authService, UserService userService, ResponseDTO responseDTO, UserDTO userDTO) {
@@ -37,7 +41,7 @@ public class AuthController {
     public ResponseEntity<?> register(@RequestBody Users user){
         String pass = user.getPassword();
         ResponseDTO data= userService.registerUser(user);
-        LoginDTO login = new LoginDTO(user.getEmail(), user.getPassword());
+        LoginDTO login = new LoginDTO(user.getEmail(), pass);
         String token = authService.loginUser(login);
         data.add("accessToken", token);
         return ResponseEntity.status(HttpStatus.CREATED).body(data);
