@@ -82,7 +82,7 @@ public class OrganisationController {
     @PostMapping("/organisations")
     public ResponseEntity<?> createOrg(@RequestHeader("Authorization") String headerValue,
                                        @RequestBody Organisations org){
-        if(org.getName() == null){
+        if(org.getName() == null || org.getName().isEmpty()){
             List<ErrorDetailDTO> error = new ArrayList<>();
             error.add(new ErrorDetailDTO("name", "This field cannot be null"));
             throw new ValidationError(error);
@@ -108,7 +108,7 @@ public class OrganisationController {
     @PostMapping("/organisations/{orgId}/users")
     public ResponseEntity<?> addOrg(@RequestBody UserDTO user, @PathVariable String orgId){
 
-        if(user.getUserId() == null){
+        if(user.getUserId() == null ||user.getUserId().isEmpty()){
             List<ErrorDetailDTO> error = new ArrayList<>();
             error.add(new ErrorDetailDTO("userId", "This field cannot be null"));
             throw new ValidationError(error);
