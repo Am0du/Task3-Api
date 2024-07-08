@@ -97,7 +97,7 @@ public class OrganisationController {
         userService.update(user);
 
         responseDTO.setMessage("success");
-        responseDTO.setStatus("Organisation created Successfully");
+        responseDTO.setStatus("Organisation created successfully");
         responseDTO.add("orgId", org.getOrgId());
         responseDTO.add("name", org.getName());
         responseDTO.add("description", org.getDescription());
