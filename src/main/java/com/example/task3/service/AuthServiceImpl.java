@@ -51,10 +51,10 @@ public class AuthServiceImpl implements AuthService{
     private List<ErrorDetailDTO> validateUser(LoginDTO user) {
         List<ErrorDetailDTO> errors = new ArrayList<>();
 
-        if (user.getEmail() == null) {
+        if (user.getEmail() == null || user.getEmail().isEmpty()) {
             errors.add(new ErrorDetailDTO("email", "This field cannot be null"));
         }
-        if (user.getPassword() == null) {
+        if (user.getPassword() == null || user.getPassword().isEmpty()) {
             errors.add(new ErrorDetailDTO("password", "This field cannot be null"));
         }
         return errors;
