@@ -42,13 +42,12 @@ public class SecurityConfig{
 
         http.authorizeHttpRequests(configure ->
                         configure
-                                .requestMatchers(HttpMethod.OPTIONS, "/auth/**").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/auth/").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/organisations").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/users/{id}").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/organisations/{orgId}").authenticated()
+                                .requestMatchers(HttpMethod.POST, "/api/organisations").authenticated()
                                 .requestMatchers(HttpMethod.POST, "/api/organisations/{orgId}/users").permitAll()
-                                .anyRequest()
-                                .authenticated()
+                                .anyRequest().permitAll()
 
         );
 

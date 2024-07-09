@@ -79,7 +79,7 @@ public class ErrorHandler {
     public ResponseEntity<?> handleNoHandlerFoundException(NoHandlerFoundException ex) {
         simpleError.setStatus("Not found");
         simpleError.setMessage("Endpoint not found");
-        simpleError.setStatusCode(HttpStatus.BAD_REQUEST.value());
+        simpleError.setStatusCode(HttpStatus.NOT_FOUND.value());
         return new ResponseEntity<>(simpleError, HttpStatus.NOT_FOUND);
     }
 
