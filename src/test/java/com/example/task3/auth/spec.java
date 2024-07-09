@@ -87,7 +87,7 @@ public class spec {
                 .when()
                 .post("/auth/register")
                 .then()
-                .statusCode(422) // Assuming 422 is the status code for validation errors
+                .statusCode(422) 
                 .extract()
                 .response();
 
