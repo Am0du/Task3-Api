@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.time.OffsetDateTime;
@@ -45,8 +47,18 @@ public class ErrorHandler {
         simpleError.setMessage("Client Error");
         simpleError.setStatusCode(HttpStatus.BAD_REQUEST.value());
 
-        return new ResponseEntity<>(exc, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(simpleError, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler
+    public ResponseEntity<?> handleException(HttpRequestMethodNotSupportedException exc){
+        simpleError.setStatus("Bad request");
+        simpleError.setMessage("Client Error: Method not supported for this endpoint");
+        simpleError.setStatusCode(HttpStatus.METHOD_NOT_ALLOWED.value());
+
+        return new ResponseEntity<>(simpleError, HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
 
     @ExceptionHandler
     public ResponseEntity<?> handleException(RegistrationFailedError exc){
