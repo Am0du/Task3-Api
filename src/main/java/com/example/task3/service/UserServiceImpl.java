@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService{
         List<ErrorDetailDTO> errors = new ArrayList<>();
 
         if (user.getFirstName() == null || user.getFirstName().isEmpty()) {
-            errors.add(new ErrorDetailDTO("firstName", user.getUserId()));
+            errors.add(new ErrorDetailDTO("firstName", "This field cannot be empty"));
         }
         if (user.getLastName() == null || user.getLastName().isEmpty()) {
             errors.add(new ErrorDetailDTO("lastName", "This field cannot be null"));
